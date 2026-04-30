@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import joblib
@@ -13,7 +15,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-model = joblib.load("loan_model.pkl")
+model_path = os.path.join(os.path.dirname(__file__), "..", "model", "loan_model.pkl")
+model = joblib.load(model_path)
 
 
 @app.get("/")
