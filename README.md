@@ -1,2 +1,2 @@
 # loan-approval-model
-This project explores and analyzes a loan applicant dataset to understand the factors influencing loan approval decisions. The goal is to preprocess the data, perform exploratory analysis, and build a machine learning pipeline to identify patterns in applicant profiles.
+Developed an unsupervised machine learning model using K-Means clustering to segment loan applicants into distinct financial risk profiles based on income, loan amount, and credit history. Identified key borrower groups to support risk assessment and lending strategy decisions.
