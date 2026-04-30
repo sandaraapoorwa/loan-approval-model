@@ -1,2 +1,2 @@
 # loan-approval-model
-Developed an unsupervised machine learning model using K-Means clustering to segment loan applicants into distinct financial risk profiles based on income, loan amount, and credit history. Identified key borrower groups to support risk assessment and lending strategy decisions.
+Built a supervised machine learning model to predict loan approval using applicant financial and employment data. Implemented data preprocessing, feature scaling, Random Forest classification, and model evaluation to identify key factors influencing loan approval decisions.
