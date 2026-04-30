@@ -2,29 +2,135 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Loan Predictor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoanIQ — Approval Predictor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="container">
+    <canvas id="bg-canvas"></canvas>
 
-    <h1>💰 Loan Approval Predictor</h1>
-    <p>Enter your details below</p>
+    <main class="wrapper">
 
-    <input id="income" placeholder="Income">
-    <input id="credit" placeholder="Credit Score">
-    <input id="loan" placeholder="Loan Amount">
-    <input id="years" placeholder="Years Employed">
+        <header class="hero">
+            <div class="status-pill" id="status-pill">
+                <span class="status-dot"></span>
+                <span id="status-text">Connecting…</span>
+            </div>
+            <h1>Will your loan <em>get approved?</em></h1>
+            <p class="subtitle">Adjust the sliders and get an instant AI-powered eligibility assessment.</p>
+        </header>
 
-    <button onclick="predict()">Check Eligibility</button>
+        <div class="card">
 
-    <div id="result"></div>
+            <div class="dti-banner">
+                <div class="dti-left">
+                    <span class="dti-label">Debt-to-Income Ratio</span>
+                    <span class="dti-value" id="dti-value">—</span>
+                </div>
+                <div class="dti-bar-wrap">
+                    <div class="dti-bar">
+                        <div class="dti-fill" id="dti-fill"></div>
+                        <div class="dti-threshold" style="left:36%"></div>
+                        <div class="dti-threshold" style="left:50%"></div>
+                    </div>
+                    <div class="dti-labels">
+                        <span>0%</span><span style="margin-left:calc(36% - 10px)">36%</span><span style="margin-left:calc(14% - 4px)">50%</span>
+                    </div>
+                </div>
+                <span class="dti-status" id="dti-status"></span>
+            </div>
 
-</div>
+            <div class="fields">
+                <div class="field-group">
+                    <div class="field-header">
+                        <label>Annual Income</label>
+                        <span class="field-val" id="income-display">$50,000</span>
+                    </div>
+                    <input type="range" id="income" min="10000" max="300000" step="1000" value="50000" class="slider">
+                    <div class="range-ends"><span>$10k</span><span>$300k</span></div>
+                </div>
 
-<script src="app.js"></script>
+                <div class="field-group">
+                    <div class="field-header">
+                        <label>Credit Score</label>
+                        <div class="credit-badge">
+                            <span id="credit-display">580</span>
+                            <span class="credit-tier" id="credit-tier">Fair</span>
+                        </div>
+                    </div>
+                    <input type="range" id="credit" min="300" max="850" step="1" value="580" class="slider credit-slider">
+                    <div class="range-ends"><span>300</span><span>850</span></div>
+                </div>
 
+                <div class="field-group">
+                    <div class="field-header">
+                        <label>Loan Amount</label>
+                        <span class="field-val" id="loan-display">$20,000</span>
+                    </div>
+                    <input type="range" id="loan" min="1000" max="200000" step="500" value="20000" class="slider">
+                    <div class="range-ends"><span>$1k</span><span>$200k</span></div>
+                </div>
+
+                <div class="field-group">
+                    <div class="field-header">
+                        <label>Years Employed</label>
+                        <span class="field-val" id="years-display">3 yrs</span>
+                    </div>
+                    <input type="range" id="years" min="0" max="40" step="1" value="3" class="slider">
+                    <div class="range-ends"><span>0</span><span>40 yrs</span></div>
+                </div>
+            </div>
+
+            <button class="cta" id="predict-btn" onclick="predict()">
+                <span class="btn-text">Check Eligibility</span>
+                <span class="btn-icon">→</span>
+            </button>
+
+        </div>
+
+        <!-- Result panel -->
+        <div class="result-panel hidden" id="result-panel">
+
+            <div class="character-col">
+                <div class="character-wrap" id="accountant-canvas-wrap"></div>
+                <div class="speech-bubble hidden" id="speech-bubble">
+                    <span id="speech-text"></span>
+                </div>
+            </div>
+
+            <div class="result-body">
+                <div class="result-top">
+                    <div class="ring-wrap">
+                        <svg class="confidence-ring" viewBox="0 0 120 120">
+                            <circle class="ring-bg" cx="60" cy="60" r="50"/>
+                            <circle class="ring-track" cx="60" cy="60" r="50" id="ring-track"/>
+                        </svg>
+                        <div class="ring-inner">
+                            <span class="ring-pct" id="ring-pct">—</span>
+                            <span class="ring-label">confidence</span>
+                        </div>
+                    </div>
+                    <div class="verdict-block">
+                        <div class="verdict-title" id="verdict-title"></div>
+                        <div class="verdict-sub" id="verdict-sub"></div>
+                    </div>
+                </div>
+                <div class="factors" id="factors"></div>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>Results are indicative only · Powered by Random Forest ML</p>
+        </footer>
+
+    </main>
+
+    <script src="accountant.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
